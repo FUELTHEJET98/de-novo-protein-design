@@ -1,4 +1,4 @@
-README.md
+# De novo protein design pilot
 De novo protein design pilot
 
 Goal
