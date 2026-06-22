@@ -75,3 +75,5 @@ Immediate next steps
 3. Fill the result table with pLDDT, PAE, and RMSD.
 4. Compare 6MRR fixed-backbone results with RFdiffusion-generated backbone results.
 5. Write a short technical report explaining the workflow, results, and limitations.
+
+Previous Colab runtime outputs were not preserved. The 6MRR fixed-backbone workflow will be rerun and output files will be recorded systematically.
