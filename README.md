@@ -1,4 +1,4 @@
-De novo protein design pilot
+# De novo protein design pilot
 
 This repository documents a small AI-assisted computational protein design workflow using ProteinMPNN and ColabFold/AlphaFold2.
 
@@ -6,9 +6,9 @@ The current completed benchmark is a fixed-backbone redesign of 6MRR chain A. Pr
 
 This is a computational self-consistency benchmark, not experimental wet-lab validation.
 
-Completed benchmark
+## Completed benchmark
 
-6MRR chain A fixed-backbone redesign
+### 6MRR chain A fixed-backbone redesign
 
 Workflow:
 
@@ -19,7 +19,7 @@ Workflow:
 5. Evaluated fixed-backbone recovery using C-alpha RMSD against a cleaned 6MRR chain A reference.
 6. Audited and corrected an initial RMSD reference mismatch caused by duplicate/alternate CA atom records in the raw downloaded PDB.
 
-Key result
+## Key result
 
 The 6MRR fixed-backbone self-consistency benchmark was completed successfully.
 
@@ -27,19 +27,19 @@ After deduplicating the 6MRR chain A reference, most selected candidates achieve
 
 Best candidate:
 
-* T0p5__sample01
-* C-alpha RMSD: 0.907 Å
-* Mean pLDDT: 84.484
+- `T0p5__sample01`
+- C-alpha RMSD: `0.907 Å`
+- Mean pLDDT: `84.484`
 
 Other strong candidates:
 
-* T0p3__sample05: RMSD 0.912 Å, mean pLDDT 84.173
-* T0p1__sample10: RMSD 1.022 Å, mean pLDDT 87.321
-* T0p5__sample10: RMSD 1.030 Å, mean pLDDT 86.114
+- `T0p3__sample05`: RMSD `0.912 Å`, mean pLDDT `84.173`
+- `T0p1__sample10`: RMSD `1.022 Å`, mean pLDDT `87.321`
+- `T0p5__sample10`: RMSD `1.030 Å`, mean pLDDT `86.114`
 
 T=1.0 candidates passed the self-consistency screen but were treated as lower-priority leads because their RMSD, pLDDT/PAE, and ProteinMPNN scores were relatively weaker.
 
-Reference audit
+## Reference audit
 
 The initial RMSD calculation appeared problematic because the raw downloaded 6MRR chain A PDB contained 71 CA atom records, while the predicted structures contained 68 CA atoms.
 
@@ -47,43 +47,49 @@ A reference audit showed that the raw PDB contained duplicate/alternate CA atom 
 
 Final reference counts:
 
-* Raw CA atom records in downloaded target: 71
-* Unique-residue CA count in downloaded target: 68
-* Deduplicated reference CA count: 68
+- Raw CA atom records in downloaded target: `71`
+- Unique-residue CA count in downloaded target: `68`
+- Deduplicated reference CA count: `68`
 
 The final RMSD values were calculated against the deduplicated 68-residue 6MRR chain A reference.
 
-Repository structure
+## Repository structure
 
-* results/
-    * Final validation table
-    * Deduplicated 6MRR chain A reference PDB
-* notes/
-    * Technical report
-    * RMSD reference audit note
-* notebooks/
-    * Reproducibility notebook for reference deduplication and RMSD recalculation
+- `results/`
+  - Final validation table
+  - Deduplicated 6MRR chain A reference PDB
 
-Important files
+- `notes/`
+  - Technical report
+  - RMSD reference audit note
 
-* results/FINAL_6MRR_design_validation_table_v3_dedup_reference.csv
-    Final validation table with ProteinMPNN scores, sequence recovery, RMSD, pLDDT, pTM, PAE, and self-consistency status.
-* results/6MRR_chain_A_deduplicated_reference.pdb
-    Cleaned 68-residue 6MRR chain A reference used for final RMSD calculation.
-* notes/RMSD_REFERENCE_AUDIT_v3_dedup_reference.md
-    Audit note explaining the 71-vs-68 CA atom mismatch and the deduplicated reference correction.
-* notes/6MRR_fixed_backbone_redesign_report.md
-    Technical report summarizing the workflow, results, interpretation, and limitations.
-* notebooks/6mrr_rmsd_audit_v3_deduplicated_reference.ipynb
-    Reproducibility notebook for reference deduplication and RMSD recalculation.
+- `notebooks/`
+  - Reproducibility notebook for reference deduplication and RMSD recalculation
 
-Limitations
+## Important files
+
+- `results/FINAL_6MRR_design_validation_table_v3_dedup_reference.csv`  
+  Final validation table with ProteinMPNN scores, sequence recovery, RMSD, pLDDT, pTM, PAE, and self-consistency status.
+
+- `results/6MRR_chain_A_deduplicated_reference.pdb`  
+  Cleaned 68-residue 6MRR chain A reference used for final RMSD calculation.
+
+- `notes/RMSD_REFERENCE_AUDIT_v3_dedup_reference.md`  
+  Audit note explaining the 71-vs-68 CA atom mismatch and the deduplicated reference correction.
+
+- `notes/6MRR_fixed_backbone_redesign_report.md`  
+  Technical report summarizing the workflow, results, interpretation, and limitations.
+
+- `notebooks/6mrr_rmsd_audit_v3_deduplicated_reference.ipynb`  
+  Reproducibility notebook for reference deduplication and RMSD recalculation.
+
+## Limitations
 
 This project does not claim experimental protein design success. The result only supports computational self-consistency: the designed sequences were predicted by ColabFold/AlphaFold2 to fold back close to the intended 6MRR chain A backbone.
 
 The workflow was AI-assisted. Code drafts, report drafts, and interpretation support were generated with ChatGPT, while notebook execution, file organization, result checking, and metric interpretation were performed by the repository owner.
 
-Next steps
+## Next steps
 
 Planned next improvements:
 
