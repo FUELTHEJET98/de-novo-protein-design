@@ -60,4 +60,4 @@ Next steps
 * Preserve the exact cleaned ProteinMPNN input backbone in every run.
 * Automate deduplicated-reference generation and RMSD validation.
 * Run a larger candidate screen with stricter lead selection.
-* Extend the workflow to a more biologically meaningful target after closing this 6MRR benchmark.너가   
+* Extend the workflow to a more biologically meaningful target after closing this 6MRR benchmark.   
