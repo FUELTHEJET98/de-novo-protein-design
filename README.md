@@ -1,79 +1,95 @@
-# De novo protein design pilot
 De novo protein design pilot
 
-Purpose
+This repository documents a small AI-assisted protein design workflow using ProteinMPNN and ColabFold/AlphaFold2.
 
-This repository documents a pilot workflow for computational protein design using RFdiffusion, ProteinMPNN, and ColabFold/AlphaFold-based self-consistency checks.
+The current completed benchmark is a fixed-backbone redesign of 6MRR chain A. ProteinMPNN was used to generate redesigned sequences for the 6MRR chain A backbone, and ColabFold/AlphaFold2 was used to test whether the designed sequences fold back into the intended backbone.
 
-The goal is not to claim successful experimental protein design yet. The current goal is to understand the design-validation pipeline and convert notebook execution into a reproducible, interpretable mini-project.
+This is a computational self-consistency benchmark, not experimental wet-lab validation.
 
-Project question
+Completed benchmark
 
-Can designed amino acid sequences fold back into the intended backbone structure according to AlphaFold/ColabFold self-consistency metrics?
+6MRR chain A fixed-backbone redesign
 
-Workflows tested
+Workflow:
 
-1. Fixed-backbone redesign using 6MRR
+1. Prepared the 6MRR chain A backbone.
+2. Generated ProteinMPNN sequence candidates across sampling temperatures 0.1, 0.3, 0.5, and 1.0.
+3. Selected seven representative candidate sequences.
+4. Predicted candidate structures with ColabFold/AlphaFold2.
+5. Evaluated fixed-backbone recovery using C-alpha RMSD against a cleaned 6MRR chain A reference.
+6. Audited and corrected an initial RMSD reference mismatch caused by duplicate/alternate CA atom records in the raw downloaded PDB.
 
-* Input: 6MRR protein backbone from the PDB
-* Sequence design: ProteinMPNN
-* Variable tested: ProteinMPNN sampling temperature
-* Validation: ColabFold/AlphaFold structure prediction
-* Evaluation: pLDDT, PAE, and backbone RMSD against the input backbone
+Key result
 
-2. RFdiffusion-based de novo backbone design
+The 6MRR fixed-backbone self-consistency benchmark was completed successfully.
 
-* Backbone generation: RFdiffusion
-* Sequence design: ProteinMPNN
-* Validation: ColabFold/AlphaFold
-* Evaluation: self-consistency between the generated backbone and the predicted structure
+After deduplicating the 6MRR chain A reference, most selected candidates achieved C-alpha RMSD below 2 Å against the 68-residue reference structure.
 
-Conceptual summary
+Best candidate:
 
-ProteinMPNN designs amino acid sequences for a given protein backbone. ColabFold/AlphaFold then predicts the 3D structure of each designed sequence. If the predicted structure is close to the intended backbone, with low RMSD and high confidence metrics, the design is considered more self-consistent within this computational workflow.
+* Candidate: T0p5__sample01
+* C-alpha RMSD: 0.907 Å
+* Mean pLDDT: 84.484
 
-For RFdiffusion, the backbone itself is generated de novo before sequence design. This makes the self-consistency test more demanding than fixed-backbone redesign of a natural PDB structure such as 6MRR.
+Other strong candidates included:
 
-Self-consistency is not proof of experimental folding or biological function. It is an early computational screen for prioritizing candidates and identifying failures before deeper analysis or wet-lab validation.
+* T0p3__sample05: RMSD 0.912 Å, mean pLDDT 84.173
+* T0p1__sample10: RMSD 1.022 Å, mean pLDDT 87.321
+* T0p5__sample10: RMSD 1.030 Å, mean pLDDT 86.114
 
-Current status
+T=1.0 candidates passed the self-consistency screen but were treated as lower-priority leads because their RMSD, pLDDT/PAE, and ProteinMPNN scores were relatively weaker.
 
-* 6MRR fixed-backbone ProteinMPNN runs were attempted.
-* ProteinMPNN sampling temperature was varied.
-* RFdiffusion + ProteinMPNN + ColabFold workflow was also attempted.
-* Current limitation: output files, score files, and metric locations are still being organized.
-* The next goal is to build a result table with pLDDT, PAE, RMSD, and self-consistency judgments.
+Reference audit
 
-Planned repository structure
+The initial RMSD calculation appeared problematic because the raw downloaded 6MRR chain A PDB contained 71 CA atom records, while the predicted structures contained 68 CA atoms.
 
-de-novo-protein-design/
-├── README.md
-├── notebooks/
-│   └── diffusion.ipynb
-├── inputs/
-│   └── 6mrr.pdb
-├── outputs/
-│   ├── rfdiffusion_backbones/
-│   ├── mpnn_sequences/
-│   └── colabfold_predictions/
+A reference audit showed that the raw PDB contained duplicate/alternate CA atom records. After deduplication, the unique-residue CA count was 68, matching the predicted structures.
+
+Final reference counts:
+
+* Raw CA atom records in downloaded target: 71
+* Unique-residue CA count in downloaded target: 68
+* Deduplicated reference CA count: 68
+
+The final RMSD values were calculated against the deduplicated 68-residue 6MRR chain A reference.
+
+Repository structure
+
+.
 ├── results/
-│   └── summary_table.md
-└── reports/
-    └── pilot_report.md
+│   ├── FINAL_6MRR_design_validation_table_v3_dedup_reference.csv
+│   └── 6MRR_chain_A_deduplicated_reference.pdb
+│
+├── notes/
+│   ├── 6MRR_fixed_backbone_redesign_report.md
+│   └── RMSD_REFERENCE_AUDIT_v3_dedup_reference.md
+│
+└── notebooks/
+    └── 6mrr_rmsd_audit_v3_deduplicated_reference.ipynb
 
-Result table to be completed
+Important files
 
-experiment	backbone	method	temperature	candidate	pLDDT	PAE	RMSD	self-consistent?	note
-6MRR fixed-backbone	6MRR	ProteinMPNN + ColabFold	?	?	?	?	?	unclear	Need to locate output files
-6MRR fixed-backbone	6MRR	ProteinMPNN + ColabFold	?	?	?	?	?	unclear	Need to locate output files
-RFdiffusion backbone	de novo	RFdiffusion + ProteinMPNN + ColabFold	?	?	?	?	?	unclear	Need to locate output files
+* results/FINAL_6MRR_design_validation_table_v3_dedup_reference.csv
+    Final validation table with ProteinMPNN scores, sequence recovery, RMSD, pLDDT, pTM, PAE, and self-consistency status.
+* results/6MRR_chain_A_deduplicated_reference.pdb
+    Cleaned 68-residue 6MRR chain A reference used for final RMSD calculation.
+* notes/RMSD_REFERENCE_AUDIT_v3_dedup_reference.md
+    Audit note explaining the 71-vs-68 CA atom mismatch and the deduplicated reference correction.
+* notes/6MRR_fixed_backbone_redesign_report.md
+    Technical report summarizing the workflow, results, interpretation, and limitations.
+* notebooks/6mrr_rmsd_audit_v3_deduplicated_reference.ipynb
+    Reproducibility notebook for reference deduplication and RMSD recalculation.
 
-Immediate next steps
+Limitations
 
-1. Locate or rerun the Colab notebook outputs.
-2. Identify input PDB, designed FASTA, predicted PDB, and score/ranking files.
-3. Fill the result table with pLDDT, PAE, and RMSD.
-4. Compare 6MRR fixed-backbone results with RFdiffusion-generated backbone results.
-5. Write a short technical report explaining the workflow, results, and limitations.
+This project does not claim experimental protein design success. The result only supports computational self-consistency: the designed sequences were predicted by ColabFold/AlphaFold2 to fold back close to the intended 6MRR chain A backbone.
 
-Previous Colab runtime outputs were not preserved. The 6MRR fixed-backbone workflow will be rerun and output files will be recorded systematically.
+The workflow was AI-assisted. Code drafts, report drafts, and interpretation support were generated with ChatGPT, while the notebook execution, file organization, result checking, and metric interpretation were performed by the repository owner.
+
+Next steps
+
+Planned next improvements:
+
+1. Build a cleaner pipeline that automatically saves the input backbone, deduplicated reference, selected FASTA files, ColabFold outputs, and RMSD tables.
+2. Apply the workflow to a more meaningful target beyond this small 6MRR benchmark.
+3. Add clearer result visualizations and structure comparison figures.
