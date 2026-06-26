@@ -1,8 +1,8 @@
 De novo protein design pilot
 
-This repository documents a small AI-assisted protein design workflow using ProteinMPNN and ColabFold/AlphaFold2.
+This repository documents a small AI-assisted computational protein design workflow using ProteinMPNN and ColabFold/AlphaFold2.
 
-The current completed benchmark is a fixed-backbone redesign of 6MRR chain A. ProteinMPNN was used to generate redesigned sequences for the 6MRR chain A backbone, and ColabFold/AlphaFold2 was used to test whether the designed sequences fold back into the intended backbone.
+The current completed benchmark is a fixed-backbone redesign of 6MRR chain A. ProteinMPNN was used to generate redesigned sequences for the 6MRR chain A backbone, and ColabFold/AlphaFold2 was used to evaluate whether the designed sequences fold back close to the intended backbone.
 
 This is a computational self-consistency benchmark, not experimental wet-lab validation.
 
@@ -27,11 +27,11 @@ After deduplicating the 6MRR chain A reference, most selected candidates achieve
 
 Best candidate:
 
-* Candidate: T0p5__sample01
+* T0p5__sample01
 * C-alpha RMSD: 0.907 Å
 * Mean pLDDT: 84.484
 
-Other strong candidates included:
+Other strong candidates:
 
 * T0p3__sample05: RMSD 0.912 Å, mean pLDDT 84.173
 * T0p1__sample10: RMSD 1.022 Å, mean pLDDT 87.321
@@ -55,17 +55,14 @@ The final RMSD values were calculated against the deduplicated 68-residue 6MRR c
 
 Repository structure
 
-.
-├── results/
-│   ├── FINAL_6MRR_design_validation_table_v3_dedup_reference.csv
-│   └── 6MRR_chain_A_deduplicated_reference.pdb
-│
-├── notes/
-│   ├── 6MRR_fixed_backbone_redesign_report.md
-│   └── RMSD_REFERENCE_AUDIT_v3_dedup_reference.md
-│
-└── notebooks/
-    └── 6mrr_rmsd_audit_v3_deduplicated_reference.ipynb
+* results/
+    * Final validation table
+    * Deduplicated 6MRR chain A reference PDB
+* notes/
+    * Technical report
+    * RMSD reference audit note
+* notebooks/
+    * Reproducibility notebook for reference deduplication and RMSD recalculation
 
 Important files
 
@@ -84,7 +81,7 @@ Limitations
 
 This project does not claim experimental protein design success. The result only supports computational self-consistency: the designed sequences were predicted by ColabFold/AlphaFold2 to fold back close to the intended 6MRR chain A backbone.
 
-The workflow was AI-assisted. Code drafts, report drafts, and interpretation support were generated with ChatGPT, while the notebook execution, file organization, result checking, and metric interpretation were performed by the repository owner.
+The workflow was AI-assisted. Code drafts, report drafts, and interpretation support were generated with ChatGPT, while notebook execution, file organization, result checking, and metric interpretation were performed by the repository owner.
 
 Next steps
 
