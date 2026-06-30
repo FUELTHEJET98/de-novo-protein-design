@@ -44,7 +44,7 @@ Other strong candidates:
 - `T0p1__sample10`: RMSD `1.022 Å`, mean pLDDT `87.321`
 - `T0p5__sample10`: RMSD `1.030 Å`, mean pLDDT `86.114`
 
-T=1.0 candidates passed the self-consistency screen but were treated as lower-priority leads because their RMSD, pLDDT/PAE, and ProteinMPNN scores were relatively weaker.
+T=1.0 candidates passed the self-consistency screen but were treated as lower-priority candidates because their RMSD, pLDDT/PAE, and ProteinMPNN scores were relatively weaker.
 
 ## Reference audit
 
