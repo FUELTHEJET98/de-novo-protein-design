@@ -25,6 +25,13 @@ The 6MRR fixed-backbone self-consistency benchmark was completed successfully.
 
 After deduplicating the 6MRR chain A reference, most selected candidates achieved C-alpha RMSD below 2 Å against the 68-residue reference structure.
 
+
+### RMSD ranking visualization
+
+![6MRR RMSD ranking plot](results/6MRR_selected_candidates_rmsd_ranked_bar_horizontal.png)
+
+The seven selected designs were ranked by C-alpha RMSD against the deduplicated 6MRR chain A reference. This visualization is descriptive only; no statistically validated cutoff was defined because the figure summarizes only seven pre-selected candidates.
+
 Best candidate:
 
 - `T0p5__sample01`
